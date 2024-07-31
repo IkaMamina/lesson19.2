@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "lesson19-2"
+version = "0.1.0"
+description = ""
+authors = ["ika <mamina747@gmail.com>"]
+readme = "README.md"
+packages = [{include = "lesson19"}]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
