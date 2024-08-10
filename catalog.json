@@ -1,0 +1,73 @@
+[
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Торт",
+      "description": "2 кг",
+      "photo": "",
+      "category": 4,
+      "price": 3000,
+      "created_at": "2024-08-09",
+      "updated_at": "2024-08-10"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Фруктовый сад",
+      "description": "1 литр",
+      "photo": "",
+      "category": 1,
+      "price": 100,
+      "created_at": "2024-08-01",
+      "updated_at": "2024-08-08"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "Белизна",
+      "description": "1 литр",
+      "photo": "",
+      "category": 2,
+      "price": 50,
+      "created_at": "2024-07-03",
+      "updated_at": "2024-08-06"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Соки",
+      "description": "Натуральные"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Бытовая химия",
+      "description": "1 литр"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Предметы гигиены",
+      "description": "100% натуральный"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Сладости",
+      "description": "Без ГМО и красителей"
+    }
+  }
+]
