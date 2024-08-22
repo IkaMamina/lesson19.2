@@ -4,41 +4,46 @@ from django.db import models
 class Product(models.Model):
     name = models.CharField(
         max_length=100,
-        verbose_name="наименование",
-        help_text="введите наименование",
+        verbose_name="Наименование",
+        help_text="Введите наименование",
     )
     description = models.TextField(
-        max_length=100, verbose_name="описание", help_text="введите описание"
+        max_length=100, verbose_name="Описание", help_text="Введите описание"
     )
     photo = models.ImageField(
         upload_to="product/photo",
         blank=True,
         null=True,
-        verbose_name="фото",
-        help_text="загрузите фото продукта",
+        verbose_name="Фото",
+        help_text="Загрузите фото продукта",
     )
     category = models.ForeignKey(
         "Category",
         on_delete=models.SET_NULL,
-        verbose_name="категория", help_text="введите категорию продукта",
+        verbose_name="Категория", help_text="Введите категорию продукта",
         blank=True,
         null=True,
         related_name='products',
     )
     price = models.IntegerField(
-        verbose_name="цена", help_text="введите цену"
+        verbose_name="Цена", help_text="Введите цену"
     )
     created_at = models.DateField(
         blank=True,
         null=True,
-        verbose_name="дата создания",
-        help_text="введите дату создания",
+        verbose_name="Дата создания",
+        help_text="Введите дату создания",
     )
     updated_at = models.DateField(
         blank=True,
         null=True,
-        verbose_name="дата последнего изменения",
-        help_text="введите дату последнего изменения",
+        verbose_name="Дата последнего изменения",
+        help_text="Введите дату последнего изменения",
+    )
+    views_counter = models.PositiveIntegerField(
+        verbose_name="Счетчик просмотров",
+        help_text="Укажите количество просмотров",
+        default=0
     )
 
     class Meta:
@@ -53,10 +58,10 @@ class Product(models.Model):
 class Category(models.Model):
     name = models.CharField(
         max_length=100,
-        verbose_name="наименование", help_text="введите наименование",
+        verbose_name="Наименование", help_text="Введите наименование",
     )
     description = models.TextField(
-        max_length=100, verbose_name="описание", help_text="введите описание"
+        max_length=100, verbose_name="Описание", help_text="Введите описание"
     )
 
     class Meta:
@@ -65,5 +70,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
 
 
