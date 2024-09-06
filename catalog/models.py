@@ -20,14 +20,13 @@ class Product(models.Model):
     category = models.ForeignKey(
         "Category",
         on_delete=models.SET_NULL,
-        verbose_name="Категория", help_text="Введите категорию продукта",
+        verbose_name="Категория",
+        help_text="Введите категорию продукта",
         blank=True,
         null=True,
-        related_name='products',
+        related_name="products",
     )
-    price = models.IntegerField(
-        verbose_name="Цена", help_text="Введите цену"
-    )
+    price = models.IntegerField(verbose_name="Цена", help_text="Введите цену")
     created_at = models.DateField(
         blank=True,
         null=True,
@@ -43,7 +42,7 @@ class Product(models.Model):
     views_counter = models.PositiveIntegerField(
         verbose_name="Счетчик просмотров",
         help_text="Укажите количество просмотров",
-        default=0
+        default=0,
     )
 
     class Meta:
@@ -58,7 +57,8 @@ class Product(models.Model):
 class Category(models.Model):
     name = models.CharField(
         max_length=100,
-        verbose_name="Наименование", help_text="Введите наименование",
+        verbose_name="Наименование",
+        help_text="Введите наименование",
     )
     description = models.TextField(
         max_length=100, verbose_name="Описание", help_text="Введите описание"
@@ -72,4 +72,21 @@ class Category(models.Model):
         return self.name
 
 
+class Version(models.Model):
+    product = models.ForeignKey(
+        Product,
+        verbose_name="продукт",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
+    number_version = models.IntegerField(verbose_name='номер версии', help_text='введите номер версии')
+    name_version = models.CharField(max_length=50, verbose_name='название версии', help_text='введите название версии')
+    current_version = models.BooleanField(verbose_name='признак текущей версии')
 
+    def __str__(self):
+        return self.name_version
+
+    class Meta:
+        verbose_name = "Версия"
+        verbose_name_plural = "Версии"
