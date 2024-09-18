@@ -1,9 +1,10 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from catalog.forms import ProductForm, VersionForm
+from catalog.forms import ProductForm, VersionForm, ProductModeratorForm
 from catalog.models import Product, Version
 
 
@@ -11,14 +12,16 @@ class CatalogListView(ListView):
     model = Product
 
 
-class CatalogDetailView(DetailView):
+class CatalogDetailView(DetailView, LoginRequiredMixin):
     model = Product
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
-        self.object.views_counter +=1
-        self.object.save()
-        return self.object
+        if self.request.user == self.object.owner:
+            self.object.views_counter += 1
+            self.object.save()
+            return self.object
+        raise PermissionDenied
 
 
 class CatalogCreateView(CreateView, LoginRequiredMixin):
@@ -33,7 +36,8 @@ class CatalogCreateView(CreateView, LoginRequiredMixin):
         product.save()
         return super().form_valid(form)
 
-class CatalogUpdateView(UpdateView):
+
+class CatalogUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:catalog_list')
@@ -57,6 +61,14 @@ class CatalogUpdateView(UpdateView):
             return super().form_valid(form)
         else:
             return self.render_to_response(self.get_context_data(form=form, formset=formset))
+
+    def get_form_class(self):
+        user = self.request.user
+        if user == self.object.owner:
+            return ProductForm
+        if user.has_perm("catalog.can_edit_category") and user.has_perm("catalog.can_edit_description"):
+            return ProductModeratorForm
+        raise PermissionDenied
 
 
 class CatalogDeleteView(DeleteView):

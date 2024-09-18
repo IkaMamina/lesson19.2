@@ -52,6 +52,10 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name", "category", "description"]
+        permissions = [
+            ("can_edit_category", "Can edit category"),
+            ("can_edit_description", "Can edit description")
+        ]
 
     def __str__(self):
         return self.name
